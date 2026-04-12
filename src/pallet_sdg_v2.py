@@ -12,7 +12,7 @@ from pxr import Semantics
 # ── Asset URLs ────────────────────────────────────────────────────────────────
 ENV_URL     = "/Isaac/Environments/Simple_Warehouse/warehouse.usd"
 ROBOT_URL   = "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Samples/ROS2/Robots/iw_hub_ROS.usd"
-CAMERA_PATH = "/iw_hub_ROS/chassis/front_hawk/left/camera_left"
+# CAMERA_PATH = "/iw_hub_ROS/chassis/front_hawk/left/camera_left"
 PALLET_URLS = [
     "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/Pallet/pallet.usd",
     "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/Pallet/o3dyn_pallet.usd",
@@ -59,6 +59,13 @@ def strip_semantics(stage, keep=("pallet",)):
                 prim.RemoveProperty(d.GetName())
                 prim.RemoveAPI(Semantics.SemanticsAPI, inst)
 
+def find_camera_path(stage, match: str) -> str:
+    """Return the first Camera prim path whose string contains `match`."""
+    for prim in stage.Traverse():
+        path = str(prim.GetPath())
+        if prim.GetTypeName() == "Camera" and match in path:
+            return path
+    raise RuntimeError(f"No Camera prim found matching '{match}'")
 
 def main():
     # ── Stage ─────────────────────────────────────────────────────────────────
@@ -73,7 +80,10 @@ def main():
         simulation_app.update()
 
     # ── Camera ────────────────────────────────────────────────────────────────
-    cam = rep.get.camera(path_match=CAMERA_PATH)
+    # cam = rep.get.camera(path_match=CAMERA_PATH)
+    cam_path = find_camera_path(stage, "chassis/front_hawk/left/camera_left")
+    print(f"Using camera: {cam_path}")
+    cam = rep.get.camera(path_match=cam_path)
 
     # ── Pallets (pool of MAX_PALLETS per type, labelled) ──────────────────────
     pallet_groups = [
