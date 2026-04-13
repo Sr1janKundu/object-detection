@@ -18,9 +18,9 @@ PALLET_URLS = [
     "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Props/Pallet/o3dyn_pallet.usd",
 ]
 
-NUM_FRAMES   = 10
+NUM_FRAMES   = 300
 RESOLUTION   = (960, 544)
-OUTPUT_DIR   = "./_pallet_data"
+OUTPUT_DIR   = "/media/srijan/New Volume/object-detection/synthetic_data/replicator_kitti/pallet_100_4"
 
 # Warehouse floor bounds
 FLOOR_X = (-9.2, 7.2)

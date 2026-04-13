@@ -1,6 +1,7 @@
 kitti.zip
 src/__pycache__/
 .venv/
+uv.lock
+synthetic_data/
 how_to_train_ultralytics_yolo_on_kitti_detection_dataset.ipynb
-PYTHON API — Omni Replicator.html
-PYTHON API — Omni Replicator_files/
+how_to_train_ultralytics_yolo_on_kitti_detection_dataset copy.ipynb
